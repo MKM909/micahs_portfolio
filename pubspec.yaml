@@ -18,6 +18,8 @@ dependencies:
   google_fonts: ^6.3.3
   carousel_slider: ^5.1.1
   device_frame: ^1.4.0
+  url_launcher: ^6.3.2
+  flutter_svg: ^2.0.10
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +34,7 @@ flutter:
 
   assets:
     - assets\images\
+    - assets\icons\
 
   # fonts:
   #   - family: Schyler

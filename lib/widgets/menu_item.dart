@@ -41,8 +41,8 @@ class _MenuItemState extends State<MenuItem> {
               boxShadow: [
                 if (isHovering)
                   BoxShadow(
-                    color: Colors.teal.shade900.withValues(alpha: 0.6),
-                    blurRadius: 20,
+                    color: Colors.teal.shade900.withValues(alpha: 0.1),
+                    blurRadius: 10,
                     spreadRadius: 2,
                   ),
               ],
@@ -164,6 +164,14 @@ class _MenuItemState extends State<MenuItem> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
             color: isHovering ? Color(0xFFF4EBDD) : Colors.transparent,
+            boxShadow: [
+              if (isHovering)
+                BoxShadow(
+                  color: Colors.teal.shade900.withValues(alpha: 0.1),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                ),
+            ],
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(100),
@@ -228,8 +236,8 @@ class _MenuItemState extends State<MenuItem> {
               boxShadow: [
                 if (isHovering)
                   BoxShadow(
-                    color: Colors.teal.shade900.withValues(alpha: 0.6),
-                    blurRadius: 20,
+                    color: Colors.teal.shade900.withValues(alpha: 0.1),
+                    blurRadius: 10,
                     spreadRadius: 2,
                   ),
               ],

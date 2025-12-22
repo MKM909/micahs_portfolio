@@ -1,5 +1,6 @@
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
-import 'package:micahs_portfolio/screens/Home.dart';
+import 'package:micahs_portfolio/screens/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: "Micah's Portfolio",
       debugShowCheckedModeBanner: false,
       home: Home(),
     );

@@ -37,27 +37,26 @@ class _HomeState extends State<Home>{
     return ResponsiveWidget(
         desktop: Scaffold(
           backgroundColor: Color(0xFFF4EBDD),
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: bodyPadding),
-            child: Stack(
-              children: [
+          body: Stack(
+            children: [
 
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: CustomTabBar(),
-                ),
-
-                Positioned.fill(
-                  top: appBarHeight,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
+              Positioned.fill(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: SingleChildScrollView(
                   child: Services(),
-                )
-              ],
-            ),
+                ),
+              ),
+
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: CustomTabBar(),
+              ),
+
+            ],
           ),
         ),
         mobile: Scaffold(
@@ -71,7 +70,6 @@ class _HomeState extends State<Home>{
                 right: 0,
                 bottom: 0,
                 child: SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(horizontal: bodyPadding),
                     child: Services()
                 ),
               ),
@@ -87,53 +85,50 @@ class _HomeState extends State<Home>{
         ),
         tablet: Scaffold(
           backgroundColor: Color(0xFFF4EBDD),
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: bodyPadding),
-            child: Stack(
-              children: [
+          body: Stack(
+            children: [
 
-                Positioned.fill(
-                  top: appBarHeight,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
+              Positioned.fill(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: SingleChildScrollView(
                   child: Services(),
                 ),
+              ),
 
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: CustomTabBar(),
-                ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: CustomTabBar(),
+              ),
 
-              ],
-            ),
+            ],
           ),
         ),
         tabletVertical: Scaffold(
           backgroundColor: Color(0xFFF4EBDD),
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: bodyPadding),
-            child: Stack(
-              children: [
+          body: Stack(
+            children: [
 
-                Positioned.fill(
-                  top: appBarHeight,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: Services(),
-                ),
+              Positioned.fill(
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: SingleChildScrollView(
+                  child: Services(),),
+              ),
 
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: CustomTabBar(),
-                ),
-              ],
-            ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: CustomTabBar(),
+              ),
+            ],
           ),
         ),
     );

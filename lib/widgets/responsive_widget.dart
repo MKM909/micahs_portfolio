@@ -18,9 +18,9 @@ class _ResponsiveWidgetState extends State<ResponsiveWidget> {
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).size.width >= 1002) {
       return widget.desktop;
-    } else if (MediaQuery.of(context).size.width >= 800) {
+    } else if (MediaQuery.of(context).size.width >= 790) {
       return widget.tablet;
-    } else if (MediaQuery.of(context).size.width >= 590) {
+    } else if (MediaQuery.of(context).size.width >= 600) {
       return widget.tabletVertical;
     } else {
       return widget.mobile;

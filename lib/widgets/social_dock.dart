@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:micahs_portfolio/util/open_link.dart';
 import 'package:simple_icons/simple_icons.dart';
 
 import '../models/social_item.dart';
@@ -12,10 +13,10 @@ class SocialDock extends StatefulWidget {
 
 class _SocialDockState extends State<SocialDock> {
   final List<SocialItem> socials = [
-    SocialItem(SimpleIcons.github, 'GitHub'),
-    SocialItem(SimpleIcons.discord, 'Discord'),
-    SocialItem(SimpleIcons.gmail, 'Gmail'),
-    SocialItem(SimpleIcons.whatsapp, 'WhatsApp'),
+    SocialItem(icon: SimpleIcons.github, url: 'https://github.com/MKM909'),
+    SocialItem(icon: SimpleIcons.discord, url: 'https://discord.com/users/1088975589161050263'),
+    SocialItem(icon: SimpleIcons.gmail, url: 'okohmicah00@gmail.com', isEmail: true),
+    SocialItem(icon: SimpleIcons.whatsapp, url: 'https://wa.me/2349126433601'),
   ];
 
   double mouseX = -1;
@@ -70,6 +71,8 @@ class _SocialDockState extends State<SocialDock> {
                   child: _DockIcon(
                     icon: socials[index].icon,
                     color: Colors.teal.shade900,
+                    url: socials[index].url,
+                    isEmail: socials[index].isEmail,
                   ),
                 ),
               );
@@ -84,10 +87,14 @@ class _SocialDockState extends State<SocialDock> {
 class _DockIcon extends StatefulWidget {
   final IconData icon;
   final Color color;
+  final String url;
+  final bool isEmail;
 
   const _DockIcon({
     required this.icon,
     required this.color,
+    required this.url,
+    this.isEmail = false,
   });
 
   @override
@@ -101,34 +108,45 @@ class _DockIconState extends State<_DockIcon> {
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
-      onEnter: (_) {
-        setState(() => hoveringIcon = true);
-      },
-      onExit: (_) {
-        setState(() => hoveringIcon = false);
-      },
-      child:AnimatedScale(
+      onEnter: (_) => setState(() => hoveringIcon = true),
+      onExit: (_) => setState(() => hoveringIcon = false),
+      child: AnimatedScale(
         scale: hoveringIcon ? 1.4 : 1.0,
         duration: const Duration(milliseconds: 120),
         curve: Curves.easeOut,
-        child: Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white,
-            border: Border.all(color: widget.color, width: 2),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.12),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
+        child: Material(
+          color: Colors.transparent,
+          shape: const CircleBorder(),
+          child: InkWell(
+            customBorder: const CircleBorder(),
+            onTap: () {
+              widget.isEmail
+                  ? openEmailWeb(widget.url)
+                  : openLink(widget.url);
+            },
+            child: SizedBox(
+              width: 44,
+              height: 44,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  border: Border.all(color: widget.color, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.12),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Icon(widget.icon, size: 20, color: widget.color),
               ),
-            ],
+            ),
           ),
-          child: Icon(widget.icon, size: 20, color: widget.color),
         ),
       ),
     );
   }
 }
+

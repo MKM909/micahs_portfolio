@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class SocialItem {
   final IconData icon;
-  final String label;
+  final String url;
+  final bool isEmail;
 
-  SocialItem(this.icon, this.label);
+  SocialItem({required this.icon,required this.url, this.isEmail = false});
 }

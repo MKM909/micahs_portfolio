@@ -1,10 +1,10 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:micahs_portfolio/widgets/responsive_widget.dart';
 import 'package:micahs_portfolio/widgets/typewriter_text.dart';
 
+import '../util/open_link.dart';
 import 'menu_item.dart';
 
 class CustomTabBar extends StatefulWidget {
@@ -75,92 +75,122 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
     double fontScale = screenWidth / 350;
     double scale = MediaQuery.of(context).size.width / 1600;
 
-    return ResponsiveWidget(
-      desktop: Container(
-        padding: EdgeInsets.symmetric(vertical: 20 * scale),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+    double bodyPadding = 50;
 
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Expanded(
-                  child: Text(
-                    'Micah$screenWidth',
-                    style: GoogleFonts.lobsterTwo(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 45,
-                      color: Colors.black
+    if (screenWidth <= 550) {
+      bodyPadding = 30;
+    } else if (screenWidth <= 850) {
+      bodyPadding = 40;
+    } else if (screenWidth <= 1000) {
+      bodyPadding = 50;
+    }
+
+    return ResponsiveWidget(
+      desktop: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            color: Color(0xFFF4EBDD).withValues(alpha: 0.5),
+            padding: EdgeInsets.symmetric(horizontal: bodyPadding, vertical: 5 * scale),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+
+                Expanded(
+                  child: Expanded(
+                    child: Text(
+                      textAlign: TextAlign.left,
+                      'Micah',
+                      style: GoogleFonts.lobsterTwo(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 45,
+                          color: Colors.black
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
 
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: List.generate(
-                menuTabs.length,
-                    (index) => Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10 * scale),
-                      child: MenuItem(
-                                      isActive: index == 0,
-                                      title: menuTabs[index],
-                                     ),
-                    ),
-                )
-
-            ),
-
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    HackerTypewriterText(
-                      text: '+234 912 6433 601',
-                      style: GoogleFonts.quicksand(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 18,
-                        color: Colors.black
-                      ),
-                      startTyping: startTyping,
-                    ),
-                    SizedBox(width: 20,),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.1),
-                                spreadRadius: 4,
-                                blurRadius: 8
-                            )
-                          ]
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Icon(
-                          Icons.phone,
-                          color: Colors.teal.shade900,
-                          size: 24 ,
+                Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: List.generate(
+                      menuTabs.length,
+                          (index) => Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10 * scale),
+                        child: MenuItem(
+                          isActive: index == 0,
+                          title: menuTabs[index],
                         ),
                       ),
-                    ),
-                  ],
+                    )
+
                 ),
-              ),
-            )
-          ],
+
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          key: const ValueKey('phone-text'),
+                          onTap: () => openCallOrWhatsapp('+2349126433601'),
+                          splashColor: Colors.teal.shade900.withValues(alpha: 0.1),
+                          child: HackerTypewriterText(
+                            text: '+234 912 6433 601',
+                            style: GoogleFonts.quicksand(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                                color: Colors.black
+                            ),
+                            startTyping: startTyping,
+                          ),
+                        ),
+                        SizedBox(width: 20,),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Material(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(100),
+                            child: InkWell(
+                              onTap: () => openCallOrWhatsapp('+2349126433601'),
+                              splashColor: Colors.teal.shade900.withValues(alpha: 0.1),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black.withValues(alpha: 0.1),
+                                          spreadRadius: 4,
+                                          blurRadius: 8
+                                      )
+                                    ]
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Icon(
+                                    Icons.phone,
+                                    color: Colors.teal.shade900,
+                                    size: 24 ,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
       mobile: Container(
@@ -182,22 +212,18 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Expanded(
-                            child: Text(
-                              'Micah',
-                              style: GoogleFonts.lobsterTwo(
-                                  fontWeight: FontWeight.w200,
-                                  fontSize: 25 * fontScale,
-                                  color: Colors.black
-                              ),
-                            ),
+                        child: Text(
+                          'Micah',
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.lobsterTwo(
+                              fontWeight: FontWeight.w200,
+                              fontSize: 27 * fontScale,
+                              color: Colors.black
                           ),
                         ),
                       ),
-              
-              
+
+
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Row(
@@ -205,7 +231,7 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-              
+
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(100),
@@ -230,7 +256,7 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                                     child: AnimatedIcon(
                                       icon: AnimatedIcons.menu_close,
                                       color: Colors.teal.shade900,
-                                      size: 12 * fontScale,
+                                      size: 14 * fontScale,
                                       progress: menuAnimationController,
                                     ),
                                   ),
@@ -305,20 +331,22 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
           ],
         ),
       ),
-      tablet:  Container(
-        padding: EdgeInsets.symmetric(vertical: 20 * scale),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
+      tablet:  ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: bodyPadding, vertical: 5 * scale),
+            color: Color(0xFFF4EBDD).withValues(alpha: 0.5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
 
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Expanded(
+                Expanded(
                   child: Text(
-                    'Micah$screenWidth',
+                    'Micah',
+                    textAlign: TextAlign.left,
                     style: GoogleFonts.lobsterTwo(
                         fontWeight: FontWeight.w500,
                         fontSize: 45,
@@ -326,137 +354,163 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                     ),
                   ),
                 ),
-              ),
-            ),
 
-            Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: List.generate(
-                  menuTabs.length,
-                      (index) => Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10 * scale),
-                    child: MenuItem(
-                      isActive: index == 0,
-                      title: menuTabs[index],
-                    ),
-                  ),
-                )
-
-            ),
-
-            Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black.withValues(alpha: 0.1),
-                                spreadRadius: 4,
-                                blurRadius: 8
-                            )
-                          ]
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Icon(
-                          Icons.phone,
-                          color: Colors.teal.shade900,
-                          size: 24 ,
+                Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: List.generate(
+                      menuTabs.length,
+                          (index) => Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10 * scale),
+                        child: MenuItem(
+                          isActive: index == 0,
+                          title: menuTabs[index],
                         ),
                       ),
-                    ),
-                  ],
+                    )
+
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
-      tabletVertical: Container(
-        padding: EdgeInsets.symmetric(vertical: 20 * scale),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
 
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Expanded(
-                child: Text(
-                  'Micah',
-                  style: GoogleFonts.lobsterTwo(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 45,
-                      color: Colors.black
-                  ),
-                ),
-              ),
-            ),
-
-            SizedBox(width: 5 * scale,),
-
-            Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: List.generate(
-                  menuTabs.length,
-                      (index) => Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10 * scale),
-                    child: MenuItem(
-                      isActive: index == 0,
-                      title: menuTabs[index],
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Material(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(100),
+                            child: InkWell(
+                              onTap: () => openCallOrWhatsapp('+2349126433601'),
+                              splashColor: Colors.teal.shade900.withValues(alpha: 0.1),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black.withValues(alpha: 0.1),
+                                          spreadRadius: 4,
+                                          blurRadius: 8
+                                      )
+                                    ]
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8),
+                                  child: Icon(
+                                    Icons.phone,
+                                    color: Colors.teal.shade900,
+                                    size: 24 ,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 )
-
+              ],
             ),
+          ),
+        ),
+      ),
+      tabletVertical: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: bodyPadding, vertical: 5 * scale),
+            color: Color(0xFFF4EBDD).withValues(alpha: 0.5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
 
-            SizedBox(width: 20 * scale,),
-
-            Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              spreadRadius: 4,
-                              blurRadius: 8
-                          )
-                        ]
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Icon(
-                        Icons.phone,
-                        color: Colors.teal.shade900,
-                        size: 24 ,
-                      ),
+                Expanded(
+                  child: Text(
+                    'Micah',
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.lobsterTwo(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 42,
+                        color: Colors.black
                     ),
                   ),
-                ],
-              ),
-            )
-          ],
+                ),
+
+                SizedBox(width: 5 * scale,),
+
+                Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: List.generate(
+                      menuTabs.length,
+                          (index) => Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10 * scale),
+                        child: MenuItem(
+                          isActive: index == 0,
+                          title: menuTabs[index],
+                        ),
+                      ),
+                    )
+
+                ),
+
+                SizedBox(width: 20 * scale,),
+
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Material(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(100),
+                          child: InkWell(
+                            onTap: () => openCallOrWhatsapp('+2349126433601'),
+                            splashColor: Colors.teal.shade900.withValues(alpha: 0.1),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black.withValues(alpha: 0.1),
+                                        spreadRadius: 4,
+                                        blurRadius: 8
+                                    )
+                                  ]
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(8),
+                                child: Icon(
+                                  Icons.phone,
+                                  color: Colors.teal.shade900,
+                                  size: 24 ,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );
