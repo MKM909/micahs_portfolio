@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:micahs_portfolio/screens/works.dart';
+import 'package:micahs_portfolio/util/key_strings.dart';
 import 'package:micahs_portfolio/widgets/animation_widgets/fade_from_bottom.dart';
 import 'package:micahs_portfolio/widgets/animation_widgets/fade_from_left.dart';
 import 'package:micahs_portfolio/widgets/animation_widgets/fade_from_right.dart';
@@ -9,6 +10,7 @@ import 'package:micahs_portfolio/widgets/social_dock.dart';
 
 import '../../widgets/responsive_widget.dart';
 import '../../widgets/typewriter_text.dart';
+import '../notifier/width_notifier.dart';
 import '../util/open_link.dart';
 
 class Services extends StatefulWidget {
@@ -24,6 +26,8 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
   bool startTyping = false;
   Duration animationDuration = const Duration(milliseconds: 800);
 
+  late WidthNotifier widthNotifier;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -34,7 +38,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
       duration: animationDuration + Duration(milliseconds: 100),
     );
 
-    animationController.forward(); // ✅ START IT
+    widthNotifier = WidthNotifier(animationController: animationController);
 
     animationController.addListener(() {
       if (animationController.isCompleted) {
@@ -43,12 +47,26 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
     });
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    animationController.dispose();
+    widthNotifier.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     double scale = MediaQuery.of(context).size.width / 1600;
     double screenWidth = MediaQuery.of(context).size.width;
+
+    widthNotifier.checkWidth(screenWidth, () {
+      setState(() {
+        startTyping = true;
+      });
+    });
+
 
     double appBarHeight =  100;
     double bodyPadding = 50;
@@ -82,7 +100,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                     duration: animationDuration,
                     child: Center(
                       child: Image.asset(
-                        key: const ValueKey('water_color'),
+                        key: const ValueKey(KeyStrings.waterColor),
                         'assets/images/water_color.png',
                         height: 600 * scale,
                         width: 650 * scale,
@@ -102,7 +120,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                       fit: BoxFit.scaleDown,
                       child: Center(
                         child: Image.asset(
-                          key: const ValueKey('micah_standalone'),
+                          key: const ValueKey(KeyStrings.micahStandalone),
                           'assets/images/micah_standalone.png',
                           height: 550 * scale,
                           width: 500 * scale,
@@ -131,7 +149,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                               children: [
                                 /// TOP
                                 HackerTypewriterText(
-                                  key: const ValueKey('top_text'),
+                                  key: const ValueKey(KeyStrings.headerText),
                                   text: "Hey There,\nI'm Micah",
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w700,
@@ -147,7 +165,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                                   onTap: () => openEmailWeb("okohmicah00@gmail.com"),
                                   child: Text(
                                     "okohmicah00@gmail.com",
-                                    key: const ValueKey('middle_text'),
+                                    key: const ValueKey(KeyStrings.emailText),
                                     style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 18,
@@ -209,7 +227,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  key: const ValueKey('middle_text'),
+                                  key: const ValueKey(KeyStrings.descriptionText),
                                   "I'm a Flutter Developer.\n"
                                       "I build beautiful and functional apps.\n"
                                       "I'm always looking for new challenges \nand opportunities to learn and grow.\n"
@@ -222,7 +240,9 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                                   ),
                                 ),
 
-                                SocialDock(),
+                                SocialDock(
+                                  key: const ValueKey(KeyStrings.socialDock),
+                                ),
 
                                 Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -247,6 +267,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                                                   ]
                                               ),
                                               child: Image.asset(
+                                                key: const ValueKey(KeyStrings.companyLogo),
                                                 'assets/images/company_logo.jpg',
                                                 width: 150 * scale,
                                                 height: 75 * scale,
@@ -300,7 +321,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                     duration: animationDuration,
                     child: Center(
                       child: Image.asset(
-                        key: const ValueKey('water_color'),
+                        key: const ValueKey(KeyStrings.waterColor),
                         'assets/images/water_color.png',
                         height: 600 * scale,
                         width: 650 * scale,
@@ -320,7 +341,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                       fit: BoxFit.scaleDown,
                       child: Center(
                         child: Image.asset(
-                          key: const ValueKey('micah_standalone'),
+                          key: const ValueKey(KeyStrings.micahStandalone),
                           'assets/images/micah_standalone.png',
                           height: 500 * scale,
                           width: 500 * scale,
@@ -349,7 +370,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                               children: [
                                 /// TOP
                                 HackerTypewriterText(
-                                  key: const ValueKey('top_text'),
+                                  key: const ValueKey(KeyStrings.headerText),
                                   text: "Hey There,\nI'm Micah",
                                   style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.w700,
@@ -365,7 +386,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                                   onTap: () => openEmailWeb("okohmicah00@gmail.com"),
                                   child: Text(
                                     "okohmicah00@gmail.com",
-                                    key: const ValueKey('middle_text'),
+                                    key: const ValueKey(KeyStrings.emailText),
                                     style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 16,
@@ -427,7 +448,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  key: const ValueKey('middle_text'),
+                                  key: const ValueKey(KeyStrings.descriptionText),
                                   "I'm a Flutter Developer. I build beautiful and functional apps. "
                                       "I'm always looking for new challenges and opportunities to learn and grow."
                                       "Let's work together to create something amazing.",
@@ -439,7 +460,9 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                                   ),
                                 ),
 
-                                SocialDock(),
+                                SocialDock(
+                                  key: const ValueKey(KeyStrings.socialDock),
+                                ),
 
                                 Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -464,6 +487,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                                                   ]
                                               ),
                                               child: Image.asset(
+                                                key: const ValueKey(KeyStrings.companyLogo),
                                                 'assets/images/company_logo.jpg',
                                                 width: 200 * scale,
                                                 height: 100 * scale,
@@ -500,114 +524,13 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
         ],
       ),
 
-      // Mobile Service
-      mobile: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: bodyPadding),
-            child: Column(
-              children: [
-                SizedBox(height: appBarHeight,),
-                FadeFromLeft(
-                  duration: animationDuration,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      /// TOP
-                      HackerTypewriterText(
-                        key: const ValueKey('top_text'),
-                        text: "Hey There, \nI'm Micah",
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 45,
-                          color: Colors.teal.shade900,
-                        ),
-                        textAlign: TextAlign.start,
-                        startTyping: startTyping,
-                      ),
-
-                      SizedBox(height: 5),
-
-                      Text(
-                        key: const ValueKey('middle_text'),
-                        "I'm a Flutter Developer. I build beautiful and functional apps. "
-                            "I'm always looking for new challenges and opportunities to learn and grow."
-                            "Let's work together to create something amazing. ${MediaQuery.of(context).size.width}",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 11,
-                          color: Colors.teal.shade900,
-                        ),
-                      ),
-
-
-                      SizedBox(height: 10),
-
-                      SocialDock(),
-
-                    ],
-                  ),
-                ),
-                Center(
-                  child: SizedBox(
-                    height: 1000 * scale,
-                    width: 950 * scale,
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: Center(
-                            child: PopBounce(
-                              duration: animationDuration,
-                              child: Center(
-                                child: Image.asset(
-                                  key: const ValueKey('water_color'),
-                                  'assets/images/water_color.png',
-                                  height: 1000 * scale,
-                                  width: 950 * scale,
-                                  color: Colors.teal.shade900,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-
-                        Positioned.fill(
-                          child: FadeFromBottom(
-                            duration: animationDuration,
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Center(
-                                child: Image.asset(
-                                  key: const ValueKey('micah_standalone'),
-                                  'assets/images/micah_standalone.png',
-                                  height: 1000 * scale,
-                                  width: 950 * scale,
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Works()
-        ],
-      ),
-
       //Tablet Vertical
       tabletVertical:  Column(
         children: [
           SizedBox(height: appBarHeight,),
           Container(
             padding: EdgeInsets.symmetric(horizontal: bodyPadding),
-            height: 1300 * scale,
+            height: 1350 * scale,
             child: Stack(
               children: [
                 Positioned(
@@ -617,7 +540,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                     duration: animationDuration,
                     child: Center(
                       child: Image.asset(
-                        key: const ValueKey('water_color'),
+                        key: const ValueKey(KeyStrings.waterColor),
                         'assets/images/water_color.png',
                         height: 900 * scale,
                         width: 950 * scale,
@@ -636,7 +559,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                       fit: BoxFit.scaleDown,
                       child: Center(
                         child: Image.asset(
-                          key: const ValueKey('micah_standalone'),
+                          key: const ValueKey(KeyStrings.micahStandalone),
                           'assets/images/micah_standalone.png',
                           height: 900 * scale,
                           width: 850 * scale,
@@ -658,7 +581,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                         children: [
                           /// TOP
                           HackerTypewriterText(
-                            key: const ValueKey('top_text'),
+                            key: const ValueKey(KeyStrings.headerText),
                             text: "Hey There, I'm Micah",
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w700,
@@ -672,10 +595,13 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                           SizedBox(height: 5),
 
                           Text(
-                            key: const ValueKey('middle_text'),
-                            "I'm a Flutter Developer. I build beautiful and functional apps. "
+                            key: const ValueKey(KeyStrings.descriptionText),
+                            screenWidth > 620 ? "I'm a Flutter Developer. I build beautiful and functional apps. "
                                 "I'm always looking for new challenges and opportunities to learn and grow."
-                                "Let's work together to create something amazing. ${MediaQuery.of(context).size.width}",
+                                "Let's work together to create something amazing. ${MediaQuery.of(context).size.width}"
+                                : "I'm a Flutter Developer. I build beautiful and functional apps. \n"
+                                "I'm always looking for new challenges and \nopportunities to learn and grow. \n"
+                                "Let's work together to create something \namazing.",
                             textAlign: TextAlign.left,
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
@@ -687,7 +613,9 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
 
                           SizedBox(height: 10),
 
-                          SocialDock(),
+                          SocialDock(
+                            key: const ValueKey(KeyStrings.socialDock),
+                          ),
 
                           Expanded(
                             child: Column(
@@ -698,7 +626,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                                   InkWell(
                                     onTap: () => openEmailWeb("okohmicah00@gmail.com"),
                                     child: Text(
-                                      key: const ValueKey('middle_text'),
+                                      key: const ValueKey(KeyStrings.emailText),
                                       "okohmicah00@gmail.com",
                                       style: GoogleFonts.poppins(
                                         fontWeight: FontWeight.w500,
@@ -776,6 +704,7 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                                                     ]
                                                 ),
                                                 child: Image.asset(
+                                                  key: const ValueKey(KeyStrings.companyLogo),
                                                   'assets/images/company_logo.jpg',
                                                   width: 200 * scale,
                                                   height: 100 * scale,
@@ -801,6 +730,111 @@ class _ServicesState extends State<Services> with TickerProviderStateMixin{
                           ),
                         ],
                       ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Works()
+        ],
+      ),
+
+      // Mobile Service
+      mobile: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: bodyPadding),
+            child: Column(
+              children: [
+                SizedBox(height: appBarHeight,),
+                FadeFromLeft(
+                  duration: animationDuration,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 8,),
+                      /// TOP
+                      HackerTypewriterText(
+                        key: const ValueKey(KeyStrings.headerText),
+                        text: "Hey There, \nI'm Micah",
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 45,
+                          color: Colors.teal.shade900,
+                        ),
+                        textAlign: TextAlign.start,
+                        startTyping: startTyping,
+                      ),
+
+                      SizedBox(height: 8),
+
+                      Text(
+                        key: const ValueKey(KeyStrings.descriptionText),
+                        "I'm a Flutter Developer. I build beautiful and functional apps. "
+                            "I'm always looking for new challenges and opportunities to learn and grow."
+                            "Let's work together to create something amazing.",
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12,
+                          height: 2.0,
+                          color: Colors.teal.shade900,
+                        ),
+                      ),
+
+
+                      SizedBox(height: 10),
+
+                      SocialDock(
+                        key: const ValueKey(KeyStrings.socialDock),
+                      ),
+
+                    ],
+                  ),
+                ),
+                Center(
+                  child: SizedBox(
+                    height: 1000 * scale,
+                    width: 950 * scale,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Center(
+                            child: PopBounce(
+                              duration: animationDuration,
+                              child: Center(
+                                child: Image.asset(
+                                  key: const ValueKey(KeyStrings.waterColor),
+                                  'assets/images/water_color.png',
+                                  height: 1000 * scale,
+                                  width: 950 * scale,
+                                  color: Colors.teal.shade900,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        Positioned.fill(
+                          child: FadeFromBottom(
+                            duration: animationDuration,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Center(
+                                child: Image.asset(
+                                  key: const ValueKey(KeyStrings.micahStandalone),
+                                  'assets/images/micah_standalone.png',
+                                  height: 1000 * scale,
+                                  width: 950 * scale,
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

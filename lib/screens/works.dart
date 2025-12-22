@@ -61,7 +61,7 @@ class _WorksState extends State<Works> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'What Do I.',
+                    'What I Do.',
                     style: GoogleFonts.poppins(
                       fontSize: 40,
                       fontWeight: FontWeight.w700,
@@ -184,7 +184,7 @@ class _WorksState extends State<Works> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'What Do I.',
+                    'What I Do.',
                     style: GoogleFonts.poppins(
                       fontSize: 40,
                       fontWeight: FontWeight.w700,
@@ -311,7 +311,7 @@ class _WorksState extends State<Works> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'What Do I.',
+                    'What I Do.',
                     style: GoogleFonts.poppins(
                       fontSize: 35,
                       fontWeight: FontWeight.w700,
@@ -430,7 +430,7 @@ class _WorksState extends State<Works> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'What Do I.',
+                  'What I Do.',
                   style: GoogleFonts.poppins(
                     fontSize: 35,
                     fontWeight: FontWeight.w700,
@@ -523,7 +523,7 @@ class _WorksState extends State<Works> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'What Do I.',
+                  'What I Do.',
                   style: GoogleFonts.poppins(
                     fontSize: 35,
                     fontWeight: FontWeight.w700,

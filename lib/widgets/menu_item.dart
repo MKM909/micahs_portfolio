@@ -122,7 +122,7 @@ class _MenuItemState extends State<MenuItem> {
                       widget.isActive ? Text(
                         '(',
                         style: GoogleFonts.quicksand(
-                          fontSize: 10 * fontScale,
+                          fontSize: 17 * fontScale,
                           color: Colors.teal.shade900,
                           fontWeight: FontWeight.bold,
                         ),
@@ -131,7 +131,7 @@ class _MenuItemState extends State<MenuItem> {
                       Text(
                         widget.title.toUpperCase(),
                         style: GoogleFonts.quicksand(
-                          fontSize: 10 * fontScale,
+                          fontSize: 16 * fontScale,
                           color: widget.isActive ? Colors.teal.shade900 : Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
@@ -140,7 +140,7 @@ class _MenuItemState extends State<MenuItem> {
                       widget.isActive ? Text(
                         ')',
                         style: GoogleFonts.quicksand(
-                          fontSize: 10 * fontScale,
+                          fontSize: 17 * fontScale,
                           color: Colors.teal.shade900,
                           fontWeight: FontWeight.bold,
                         ),

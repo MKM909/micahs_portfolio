@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:micahs_portfolio/widgets/responsive_widget.dart';
 import 'package:micahs_portfolio/widgets/typewriter_text.dart';
 
+import '../util/key_strings.dart';
 import '../util/open_link.dart';
 import 'menu_item.dart';
 
@@ -19,10 +20,6 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
 
   List<String> menuTabs = ['Services', 'Work', 'Notes', 'Experience'];
 
-  bool startTyping = false;
-  Duration animationDuration = const Duration(milliseconds: 800);
-  late AnimationController animationController;
-
   bool menuOpen = false;
   late AnimationController menuAnimationController;
 
@@ -31,18 +28,6 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
     // TODO: implement initState
     super.initState();
 
-    animationController = AnimationController(
-      vsync: this,
-      duration: animationDuration + Duration(milliseconds: 100),
-    );
-
-    animationController.forward(); // ✅ START IT
-
-    animationController.addListener(() {
-      if (animationController.isCompleted) {
-        setState(() => startTyping = true);
-      }
-    });
 
     menuAnimationController = AnimationController(
       vsync: this,
@@ -58,13 +43,6 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
       menuOpen ? menuAnimationController.forward() : menuAnimationController
           .reverse();
     });
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    animationController.dispose();
   }
 
   @override
@@ -101,6 +79,7 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                 Expanded(
                   child: Expanded(
                     child: Text(
+                      key: const ValueKey(KeyStrings.micahLogo),
                       textAlign: TextAlign.left,
                       'Micah',
                       style: GoogleFonts.lobsterTwo(
@@ -138,17 +117,16 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         InkWell(
-                          key: const ValueKey('phone-text'),
+                          key: const ValueKey(KeyStrings.phoneNumberText),
                           onTap: () => openCallOrWhatsapp('+2349126433601'),
                           splashColor: Colors.teal.shade900.withValues(alpha: 0.1),
-                          child: HackerTypewriterText(
-                            text: '+234 912 6433 601',
+                          child: Text(
+                            '+234 912 6433 601',
                             style: GoogleFonts.quicksand(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 15,
                                 color: Colors.black
                             ),
-                            startTyping: startTyping,
                           ),
                         ),
                         SizedBox(width: 20,),
@@ -205,7 +183,7 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
                   color: Color(0xFFF4EBDD).withValues(alpha: 0.5),
-                  padding: EdgeInsets.symmetric(vertical: 5 * fontScale , horizontal: 20 * fontScale),
+                  padding: EdgeInsets.symmetric(vertical: 10 * fontScale , horizontal: 20 * fontScale),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
@@ -213,11 +191,12 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                     children: [
                       Expanded(
                         child: Text(
+                          key: const ValueKey(KeyStrings.micahLogo),
                           'Micah',
                           textAlign: TextAlign.left,
                           style: GoogleFonts.lobsterTwo(
                               fontWeight: FontWeight.w200,
-                              fontSize: 27 * fontScale,
+                              fontSize: 30 * fontScale,
                               color: Colors.black
                           ),
                         ),
@@ -252,11 +231,11 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                                   onTap: toggle,
                                   splashColor: Colors.teal.shade900.withValues(alpha: 0.1),
                                   child: Padding(
-                                    padding: EdgeInsets.all(8 * fontScale),
+                                    padding: EdgeInsets.all(10 * fontScale),
                                     child: AnimatedIcon(
                                       icon: AnimatedIcons.menu_close,
                                       color: Colors.teal.shade900,
-                                      size: 14 * fontScale,
+                                      size: 20 * fontScale,
                                       progress: menuAnimationController,
                                     ),
                                   ),
@@ -285,7 +264,7 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: AnimatedSize(
-                  duration: animationDuration,
+                  duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOutCubic,
                   alignment: Alignment.topCenter,
                   child: ClipRect(
@@ -295,7 +274,7 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
                       child: BackdropFilter(
                         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                         child: Container(
-                          padding: EdgeInsets.all(15 * fontScale),
+                          padding: EdgeInsets.symmetric(vertical: 20 * fontScale, horizontal: 30 * fontScale),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             color: const Color(0xFFF4EBDD).withValues(alpha: 0.5),
@@ -345,6 +324,7 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
 
                 Expanded(
                   child: Text(
+                    key: const ValueKey(KeyStrings.micahLogo),
                     'Micah',
                     textAlign: TextAlign.left,
                     style: GoogleFonts.lobsterTwo(
@@ -435,6 +415,7 @@ class _TabBarState extends State<CustomTabBar> with TickerProviderStateMixin{
 
                 Expanded(
                   child: Text(
+                    key: const ValueKey(KeyStrings.micahLogo),
                     'Micah',
                     textAlign: TextAlign.left,
                     style: GoogleFonts.lobsterTwo(
